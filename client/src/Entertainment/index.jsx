@@ -154,9 +154,9 @@ function Entertainment() {
         </div>
       </div>
       {/* <LatestNewsWidget /> */}
-      <div className="fixed top-0 w-screen h-screen z-1000">
+      {/* <div className="fixed top-0 w-screen h-screen z-1000">
         <StoryPage />
-      </div>
+      </div> */}
     </>
   );
 }
