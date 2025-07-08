@@ -21,9 +21,10 @@ function Footer() {
       links: ["Instagram", "Twitter", "Facebook", "YouTube"],
     },
   ];
+
   return (
     <>
-      <div className="border-t py-20 bg-[#2ac3ff] border-gray-300 px-6 md:px-16 lg:px-24 xl:px-32">
+      <div className="border-t py-20 bg-[#1c1c1d] border-gray-300 px-6 md:px-16 lg:px-24 xl:px-32">
         <div className="flex flex-col md:flex-row items-start justify-between gap-10 py-10 border-b border-white text-white">
           <div>
             <img

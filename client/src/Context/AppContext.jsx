@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 // Create the context
 const AppContext = createContext();
@@ -7,6 +7,7 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   // Store component states in an object: { [componentName]: state }
   const [componentStates, setComponentStates] = useState({});
+  const [fixSubscribe, setFixSubscribe] = useState();
 
   // Function to update a component's state
   const setComponentState = (componentName, state) => {
@@ -15,6 +16,10 @@ export const AppProvider = ({ children }) => {
       [componentName]: state,
     }));
   };
+
+  // useEffect(() => {
+
+  // }, [third])
 
   // Function to get a component's state
   const getComponentState = (componentName) => {
