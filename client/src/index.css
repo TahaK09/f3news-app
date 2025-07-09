@@ -4,5 +4,5 @@
 @custom-variant dark (&:is(.dark *));
 
 body {
-  font-family: "Libre Baskerville", serif;
+  font-family: "TikTok Sans", sans-serif;
 }
