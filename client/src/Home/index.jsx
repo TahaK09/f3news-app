@@ -182,24 +182,41 @@ function Home() {
   return (
     <>
       <div className="my-5 mt-44 gap-5 w-[60vw] flex flex-col justify-center items-center mx-auto">
-        <div className="h-96 flex flex-row relative">
+        {/* Trnding/Featured Section */}
+        <div className="h-96 flex flex-row relative bg-gray-100 rounded-lg">
           {/* Image section with badge overlay */}
-          <div className="w-[50%] h-full p-2 relative">
+          <div className="w-[50%] h-full relative">
             {/* Trending badge */}
             <div className="flex justify-center items-center absolute bottom-4 left-4 bg-[#3270d4bd] py-4 px-10 font-medium rounded-sm h-9 text-amber-50 max-w-52 z-20">
               TRENDING
             </div>
             <img
-              className="w-full h-full rounded-sm object-cover"
+              className="w-full h-full rounded-l-lg object-cover"
               src={image}
               alt="News"
             />
           </div>
 
           {/* Text section */}
-          <div className="w-[50%] text-5xl/14 text-gray-700 font-semibold px-6 py-2">
-            Trump admin files charges after FOX News exposes state's plan for
-            illegal who killed American teens
+          <div className="w-[50%] px-10 py-2 flex flex-col gap-1">
+            {/* BreadCrums */}
+            <div className="text-base text-blue-700 font-normal">
+              US Politics
+            </div>
+            <div className="text-3xl font-semibold text-gray-900">
+              Trump admin files charges after FOX News exposes state's plan for
+              illegal who killed American teens
+            </div>
+            <div className="font-normal text-gray-600 mt-5 flex flex-col gap-2">
+              <div className="text-lg/5">
+                Kerr County officials took 90 minutes to send emergency alert:
+                Dispatch audio
+              </div>
+              <div className="text-lg/5">
+                'I think this is it': Dad leaves harrowing voicemails before
+                dying in Texas flood
+              </div>
+            </div>
           </div>
         </div>
 

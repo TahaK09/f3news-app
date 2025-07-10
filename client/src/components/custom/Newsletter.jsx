@@ -2,7 +2,7 @@ import React from "react";
 
 function Newsletter() {
   return (
-    <div className="fixed right-14 top-1/7 z-50 bg-white rounded-sm p-7 w-72 border border-gray-300 shadow-sm text-black space-y-4 ">
+    <div className="fixed right-14 top-1/5 z-50 bg-white rounded-sm p-7 w-72 border border-gray-300 shadow-sm text-black space-y-4 ">
       <div className="flex flex-col items-start   text-gray-500 ">
         <div className="bg-blue-600/20 p-3 rounded">
           <svg

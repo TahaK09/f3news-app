@@ -26,7 +26,6 @@ function Navbar() {
     { name: "Business", link: "/business" },
     { name: "Entertainment", link: "/entertainment" },
     { name: "Sports", link: "/sports" },
-    { name: "F3+", link: "/f3-plus" },
   ];
 
   const date = new Date();
@@ -41,27 +40,34 @@ function Navbar() {
     <>
       {/* Promotion Tag - Only visible at top */}
       {showPromo && (
-        <div className="w-full py-2.5 font-medium text-sm text-white flex flex-row justify-between px-40 bg-gray-800 fixed top-0 left-0 z-40">
+        <div className="w-full min-h-20 py-2.5 font-medium text-sm text-white flex flex-row justify-between px-40 bg-gray-800 fixed top-0 left-0 z-40">
           <div className="flex flex-row gap-5">
-            <div className="gap-1.5 flex flex-row font-light text-[12px] items-center justify-center">
-              FAST | FACTS | FEARLESS
-            </div>
-            <div className="gap-1.5 flex flex-row font-light text-[12px] items-center justify-center">
+            <div className="gap-1.5 flex flex-row font-light text-md items-center justify-center">
               <MapPin className="w-4 h-4" />
               Mumbai, Maharastra, India
             </div>
-            <div className="gap-1.5 flex flex-row font-light text-[12px] items-center justify-center">
+            <div className="gap-1.5 flex flex-row font-light text-md items-center justify-center">
               <CalendarDays className="w-4 h-4" />
               {formatDate}
             </div>
           </div>
+          <div className="flex flex-row gap-5">
+            <div className="gap-1.5 flex flex-row font-light text-md items-center justify-center">
+              <MapPin className="w-4 h-4" />
+              Mumbai, Maharastra, India
+            </div>
+            <div className="gap-1.5 flex flex-row font-light text-md items-center justify-center">
+              <CalendarDays className="w-4 h-4" />
+              {formatDate}
+            </div>
+          </div>{" "}
         </div>
       )}
 
       {/* Navbar */}
       <nav
         className={`z-50 fixed ${
-          showPromo ? "top-[42px]" : "top-0"
+          showPromo ? "top-[80px]" : "top-0"
         } left-0 right-0 flex items-center justify-between px-6 md:px-16 lg:px-22 xl:px-32 py-4 border-b border-gray-300 bg-white transition-all`}
       >
         <NavLink to="/" onClick={() => setOpen(false)}>
@@ -69,21 +75,23 @@ function Navbar() {
         </NavLink>
 
         {/* Desktop Menu */}
-        <div className="hidden sm:flex items-center gap-3">
+        <div className="hidden sm:flex items-center">
           {navLink.map((item, index) => (
-            <div key={index} className="inline">
+            <div key={index} className="inline font-semibold">
               <NavLink to={item.link}>{item.name}</NavLink>
               {index < navLink.length - 1 && (
-                <span className="text-[#202020] mx-2">|</span>
+                <span className="text-[#c7c7c7] font-base font-light mx-3">
+                  |
+                </span>
               )}
             </div>
           ))}
         </div>
         <div className="hidden sm:flex flex-row gap-2">
-          <button className="flex flex-row items-center justify-center gap-1 cursor-pointer p-2 rounded-full hover:bg-primary-dull transition text-[#ffffff] text-sm font-light bg-[#7e7e7e]">
-            <Search className="w-4 h-4" />
+          <button className="flex flex-row items-center justify-center gap-1 cursor-pointer p-2 rounded-full hover:bg-primary-dull transition text-[#ffffff] text-sm font-light bg-[#e2e2e2]">
+            <Search className="w-4 h-4 text-black" />
           </button>
-          <button className="flex rounded flex-row items-center justify-center gap-1 cursor-pointer px-4 py-1 hover:bg-primary-dull transition text-[#ffffff] text-sm font-light bg-[#436ce9]">
+          <button className="flex flex-row items-center justify-center gap-1 cursor-pointer px-4 py-1 hover:bg-primary-dull transition text-[#ffffff] text-sm font-light bg-[#000000] rounded-lg">
             <User className="w-4 h-4" /> Sign In
           </button>
         </div>
@@ -139,7 +147,7 @@ function Navbar() {
         <div
           className={`${
             open ? "flex" : "hidden"
-          } absolute top-[60px] left-0 w-full bg-white text-[#202020] shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}
+          } absolute top-[60px] left-0 w-full bg-white font-bold text-[#202020] shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}
         >
           <NavLink to="/" onClick={() => setOpen(false)}>
             Home
