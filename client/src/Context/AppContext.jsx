@@ -8,6 +8,16 @@ export const AppProvider = ({ children }) => {
   // Store component states in an object: { [componentName]: state }
   const [componentStates, setComponentStates] = useState({});
   const [fixSubscribe, setFixSubscribe] = useState();
+  const [showPromo, setShowPromo] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowPromo(window.scrollY === 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Function to update a component's state
   const setComponentState = (componentName, state) => {
@@ -28,7 +38,13 @@ export const AppProvider = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{ componentStates, setComponentState, getComponentState }}
+      value={{
+        componentStates,
+        setComponentState,
+        getComponentState,
+        setShowPromo,
+        showPromo,
+      }}
     >
       {children}
     </AppContext.Provider>

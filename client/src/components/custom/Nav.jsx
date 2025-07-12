@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import Logo from "../../assets/Logo.png";
+import Logo from "../../assets/f3news-logo-new.png";
 import { User, Search, MapPin, CalendarDays } from "lucide-react";
+import { useAppContext } from "../../Context/AppContext";
 
 function Navbar() {
+  const { showPromo } = useAppContext();
+
   const [open, setOpen] = useState(false);
-  const [showPromo, setShowPromo] = useState(true);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowPromo(window.scrollY === 0);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const navLink = [
     { name: "Home", link: "/" },
@@ -71,7 +64,11 @@ function Navbar() {
         } left-0 right-0 flex items-center justify-between px-6 md:px-16 lg:px-22 xl:px-32 py-4 border-b border-gray-300 bg-white transition-all`}
       >
         <NavLink to="/" onClick={() => setOpen(false)}>
-          <img className="h-12" src={Logo} alt="dummyLogoColored" />
+          <img
+            className="h-12 rounded-full"
+            src={Logo}
+            alt="dummyLogoColored"
+          />
         </NavLink>
 
         {/* Desktop Menu */}

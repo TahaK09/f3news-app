@@ -1,9 +1,15 @@
 import React from "react";
+import { useAppContext } from "../../Context/AppContext";
 
 function Newsletter() {
+  const { showPromo } = useAppContext();
+  const top_align = showPromo === true ? "top-1/5" : "top-1/9";
+
   //Making this a section that will show the recent video on youtube or featured one -- putting the newsletter in the footer of the page
   return (
-    <div className="fixed right-14 top-1/5 z-50 bg-white rounded-md border border-gray-300 shadow-sm text-black space-y-4 flex flex-col justify-center items-center">
+    <div
+      className={`fixed right-4 ${top_align} z-50 bg-white rounded-md border border-gray-300 shadow-sm text-black space-y-4 flex flex-col justify-center items-center`}
+    >
       <iframe
         width="330"
         height="160"

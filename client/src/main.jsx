@@ -11,7 +11,7 @@ import Entertainment from "./Entertainment/index";
 import Contact from "./Contact/index";
 import Article from "./Article/index";
 import AdminNewsUpload from "./Admin/index.jsx";
-
+import { AppProvider } from "./Context/AppContext";
 const PUBLISHABLE_KEY =
   "pk_test_ZXhjaXRlZC1nb3JpbGxhLTkuY2xlcmsuYWNjb3VudHMuZGV2JA";
 
@@ -38,7 +38,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
-      <RouterProvider router={router} />
+      <AppProvider>
+        <RouterProvider router={router} />
+      </AppProvider>
     </ClerkProvider>
   </React.StrictMode>
 );
