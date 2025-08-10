@@ -26,7 +26,7 @@ function Article() {
     const fetchArticle = async () => {
       try {
         const res = await axios.get(
-          `${process.env.RENDER_SERVER_URL}/api/articles/${slug}`
+          `${import.meta.env.VITE_RENDER_SERVER_URL}/api/articles/${slug}`
         );
 
         if (res.data.success) {
