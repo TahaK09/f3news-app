@@ -41,9 +41,7 @@ function Category() {
     const fetchArticles = async () => {
       try {
         const res = await axios.get(
-          `${
-            import.meta.env.VITE_RENDER_SERVER_URL
-          }/api/articles/category/${page}`
+          `http://localhost:3000/api/articles/category/${page}`
         );
 
         if (res.data.success) {
