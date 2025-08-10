@@ -41,7 +41,7 @@ function Category() {
     const fetchArticles = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/articles/category/${page}`
+          `${process.env.RENDER_SERVER_URL}/api/articles/category/${page}`
         );
 
         if (res.data.success) {

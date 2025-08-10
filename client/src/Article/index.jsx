@@ -26,7 +26,7 @@ function Article() {
     const fetchArticle = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/articles/${slug}`
+          `${process.env.RENDER_SERVER_URL}/api/articles/${slug}`
         );
 
         if (res.data.success) {
