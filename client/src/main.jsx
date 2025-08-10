@@ -2,7 +2,6 @@ import React, { StrictMode } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ClerkProvider } from "@clerk/clerk-react";
 import * as ReactDOM from "react-dom/client";
-import "dotenv/config";
 import "./index.css";
 import App from "./App.jsx";
 import Home from "./Home/index.jsx";

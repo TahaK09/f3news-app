@@ -6,6 +6,7 @@ import DOMPurify from "dompurify";
 function Article() {
   const { page, slug } = useParams();
   const [article, setArticle] = useState({});
+  const API_URL = import.meta.env.VITE_RENDER_SERVER_URL;
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -25,9 +26,7 @@ function Article() {
   useEffect(() => {
     const fetchArticle = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:3000/api/articles/${slug}`
-        );
+        const res = await axios.get(`${API_URL}/api/articles/${slug}`);
 
         if (res.data.success) {
           setArticle(res.data.article);

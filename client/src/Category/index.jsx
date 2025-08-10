@@ -15,6 +15,8 @@ function Category() {
   const [politicsNews, setPoliticsNews] = useState([]);
   const [trendingNews, setTrendingNews] = useState([]);
 
+  const API_URL = import.meta.env.VITE_RENDER_SERVER_URL;
+
   const ReadingTime = (content) => {
     const averageReadingTime = 200;
     const words = content?.trim()?.split(/\s+/)?.length || 0;
@@ -40,9 +42,7 @@ function Category() {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:3000/api/articles/category/${page}`
-        );
+        const res = await axios.get(`${API_URL}/api/articles/category/${page}`);
 
         if (res.data.success) {
           setArticles(res.data.articles || []);
