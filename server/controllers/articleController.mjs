@@ -6,6 +6,7 @@ export const createArticle = async (req, res) => {
   try {
     const {
       title,
+      imgDescription,
       content,
       category,
       subcategory,
@@ -14,31 +15,43 @@ export const createArticle = async (req, res) => {
       tags,
       image_url,
       is_featured,
+      status,
     } = req.body;
 
-    if (!title || !content || !category) {
+    if (
+      !title ||
+      !content ||
+      typeof category !== "string" ||
+      !category.trim()
+    ) {
       return res.status(400).json({
         success: false,
         message: "Title, content and category are required!",
       });
     }
-    const categoryLC = category.toLowerCase();
+    const categoryLC = category.trim().toLowerCase();
+
     const slug = `${slugify(title, {
       lower: true,
       strict: true,
     })}-${uuidv4().slice(0, 8)}`;
 
+    const TagsArr =
+      typeof tags === "string" ? tags.split(",").map((tag) => tag.trim()) : [];
+
     const newArticle = new articleModel({
       title,
+      imgDescription,
       slug,
       summary,
       content,
       category: categoryLC,
       subcategory,
       author,
-      tags,
+      tags: TagsArr,
       image_url,
       is_featured,
+      status,
     });
 
     await newArticle.save();
@@ -73,10 +86,11 @@ export const getArticleByCategory = async (req, res) => {
   try {
     const { category } = req.params;
     const articles = await articleModel.find({ category: category });
-    if (!articles)
+    if (!articles.length) {
       return res
         .status(404)
-        .json({ success: true, message: "No such categories exists!" });
+        .json({ success: false, message: "No such category exists!" });
+    }
 
     res.json({ success: true, articles });
   } catch (err) {
@@ -94,8 +108,7 @@ export const getArticleBySlug = async (req, res) => {
         .json({ success: true, message: "Article not found!" });
 
     // Increase view count
-    article.views += 1;
-    await article.save();
+    await articleModel.updateOne({ slug }, { $inc: { views: 1 } });
 
     res.json({ success: true, article });
   } catch (err) {

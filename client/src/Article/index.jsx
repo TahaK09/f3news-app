@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import DOMPurify from "dompurify";
 
 function Article() {
   const { page, slug } = useParams();
@@ -132,12 +133,62 @@ function Article() {
             />
           </a>
           <a
-            href="https://www.whatsapp.com/f3news"
-            className="p-1 border border-gray-200"
+            href="https://www.instagram.com/f3news"
+            className="p-2 border border-gray-200 rounded"
           >
             <img
-              className="w-7 h-7"
-              src="https://png.pngtree.com/png-clipart/20221019/original/pngtree-whatsapp-mobile-software-icon-png-image_8704828.png"
+              className="w-6 h-6"
+              src="https://images.seeklogo.com/logo-png/28/1/instagram-new-2016-logo-png_seeklogo-282177.png"
+              alt=""
+            />
+          </a>
+          <a
+            href="https://www.facebook.com/f3news.in"
+            className="p-2 border border-gray-200 rounded"
+          >
+            <img
+              className="w-6 h-6"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Facebook_logo_%28square%29.png/960px-Facebook_logo_%28square%29.png"
+              alt=""
+            />
+          </a>
+          <a
+            href="https://www.youtube.com/@f3news"
+            className="p-2 border border-gray-200 rounded"
+          >
+            <img
+              className="w-6 h-6"
+              src="https://static.vecteezy.com/system/resources/previews/018/910/708/non_2x/youtube-logo-youtube-icon-youtube-symbol-free-free-vector.jpg"
+              alt=""
+            />
+          </a>
+          <a
+            href="https://www.x.com/F3NewsOfficial"
+            className="p-2 border border-gray-200 rounded"
+          >
+            <img
+              className="w-6 h-6"
+              src="https://static.vecteezy.com/system/resources/thumbnails/042/148/611/small_2x/new-twitter-x-logo-twitter-icon-x-social-media-icon-free-png.png"
+              alt=""
+            />
+          </a>
+          <a
+            href="https://www.threads.com/f3news"
+            className="p-2 border border-gray-200 rounded"
+          >
+            <img
+              className="w-6 h-6"
+              src="https://images.seeklogo.com/logo-png/49/2/threads-logo-png_seeklogo-491194.png"
+              alt=""
+            />
+          </a>
+          <a
+            href="https://www.telegram.com/f3news"
+            className="p-2 border border-gray-200 rounded"
+          >
+            <img
+              className="w-6 h-6"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/1024px-Telegram_logo.svg.png"
               alt=""
             />
           </a>
@@ -145,12 +196,17 @@ function Article() {
         {/* Content */}
         <div className="py-10 flex flex-col gap-2 border-b border-gray-200">
           <img src={article.image_url} className="w-full h-auto" alt="" />
-          <div className="text-lg font-light text-gray-500">
-            Credit: Amit Shah
+          <div className="text-base font-light text-gray-500">
+            {article.imgDescription}
           </div>
 
           <div className="font-medium text-lg text-gray-800 my-5">
-            {article.content}
+            <div
+              className="prose prose-lg"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(article.content),
+              }}
+            />
           </div>
 
           <div className="bg-[#FFEEC7] p-6 rounded">

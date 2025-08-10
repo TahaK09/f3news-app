@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const newsArticleSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
+    imgDescription: { type: String, required: true },
     slug: { type: String, unique: true },
     summary: String,
     content: { type: String, required: true },

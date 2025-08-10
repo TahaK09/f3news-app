@@ -110,7 +110,7 @@ function Category() {
             />
             <h2 className="mt-4 text-[26px]/10 font-bold">{featured.title}</h2>
             <p className="text-gray-600 mt-2">
-              {featured.content?.slice(0, 90).trim() + "..."}
+              {featured.summary?.slice(0, 90).trim() + "..."}
             </p>
             <p className="text-sm text-gray-500 mt-1">
               {DateFormat(featured.createdAt)}
