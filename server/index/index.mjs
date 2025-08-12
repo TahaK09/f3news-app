@@ -5,6 +5,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import connectDB from "../config/mongodb.mjs";
 import articleRouter from "../routers/articleRouter.mjs";
+import featureRouter from "../routers/fVideoRouter.mjs";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -40,6 +41,7 @@ if (process.env.NODE_ENV === "development") {
 // Routes
 app.get("/", (req, res) => res.send("API WORKING"));
 app.use("/api/articles", articleRouter);
+app.use("/api/featuredvideo", featureRouter);
 
 // DB & Server
 connectDB()

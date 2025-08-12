@@ -10,7 +10,6 @@ import F3Plus from "./Plus/index";
 import Entertainment from "./Entertainment/index";
 import Contact from "./Contact/index";
 import Article from "./Article/index";
-import AdminNewsUpload from "./Admin/index.jsx";
 import { AppProvider } from "./Context/AppContext";
 const PUBLISHABLE_KEY =
   "pk_test_ZXhjaXRlZC1nb3JpbGxhLTkuY2xlcmsuYWNjb3VudHMuZGV2JA";
@@ -30,7 +29,6 @@ const router = createBrowserRouter([
       { path: "/contact", element: <Contact /> },
       { path: "/:page/article/:slug", element: <Article /> },
       { path: "/:page", element: <Category /> },
-      { path: "/admin/*", element: <AdminNewsUpload /> },
     ],
   },
 ]);

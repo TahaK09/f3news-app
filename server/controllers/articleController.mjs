@@ -64,7 +64,7 @@ export const createArticle = async (req, res) => {
 
 export const getAllArticles = async (req, res) => {
   try {
-    const { category, subcategory, page = 1, limit = 10 } = req.query;
+    const { category, subcategory, page = 1, limit = 20 } = req.query;
 
     const filter = {};
     if (category) filter.category = category;
@@ -105,7 +105,7 @@ export const getArticleBySlug = async (req, res) => {
     if (!article)
       return res
         .status(404)
-        .json({ success: true, message: "Article not found!" });
+        .json({ success: false, message: "Article not found!" });
 
     // Increase view count
     await articleModel.updateOne({ slug }, { $inc: { views: 1 } });
@@ -116,16 +116,33 @@ export const getArticleBySlug = async (req, res) => {
   }
 };
 
-export const updateArticle = async (req, res) => {
+export const getArticleByID = async (req, res) => {
   try {
-    const { slug } = req.params;
-    const article = await articleModel.findOne({ slug: slug });
+    const { _id } = req.params;
+    const article = await articleModel.findOne({ _id: _id });
     if (!article)
       return res
         .status(404)
         .json({ success: false, message: "Article not found!" });
 
+    res.json({ success: true, article });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Internal server error!" });
+  }
+};
+
+export const updateArticle = async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const article = await articleModel.findOne({ _id });
+    if (!article) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Article not found!" });
+    }
+
     Object.assign(article, req.body);
+
     if (req.body.title) {
       article.slug = `${slugify(req.body.title, {
         lower: true,
@@ -134,8 +151,9 @@ export const updateArticle = async (req, res) => {
     }
 
     await article.save();
-    res.json(article);
+    res.json({ success: true, article });
   } catch (err) {
+    console.error("Error in updateArticle:", err);
     res.status(500).json({ success: false, message: "Internal server error!" });
   }
 };
