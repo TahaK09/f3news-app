@@ -1,34 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import RecentSocialPosts from "../components/custom/RecentSocialPosts";
 import LatestNewsWidget from "../components/custom/LatestNewsWidget";
 import StoryPage from "../components/custom/StoryPage.jsx";
+import axios from "axios";
 
 function Entertainment() {
-  const photoStories = [
-    {
-      image: "/images/varun.jpg",
-      title:
-        "Varun Dhawan to Veer Pahariya: Bollywood actors flaunt their washboard abs",
-      time: "31 minutes ago",
-    },
-    {
-      image: "/images/kesari.jpg",
-      title:
-        "'Kesari Veer' Trailer Launch: Celebrities shine bright on the red carpet",
-      time: "2 hours ago",
-    },
-    {
-      image: "/images/dance.jpg",
-      title:
-        "World Dance Day 2025: Celebrating the icons behind Bollywood’s most iconic moves",
-      time: "29 April 2025, 16:17 IST",
-    },
-    {
-      image: "/images/padma.jpg",
-      title: "Padma Award Kumar, Balak Shekhar Kapur",
-      time: "28 April 2025, 21:14 IST",
-    },
-  ];
+  const [stories, setStories] = useState([]);
+  const [isStoryOpen, setIsStoryOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchStories = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/api/stories`);
+        if (res.data.success && res.data.stories) {
+          setStories(res.data.stories);
+        }
+      } catch (error) {
+        console.error("Error fetching Stories:", error);
+      }
+    };
+
+    fetchStories();
+  }, []);
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    return date.toLocaleString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+      timeZone: "Asia/Kolkata", // Ensures IST
+      timeZoneName: "short",
+    });
+  };
 
   const reviews = [
     {
@@ -124,39 +132,43 @@ function Entertainment() {
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold">PHOTOS</h2>
-            <a
-              href="#"
+            <button
+              onClick={() => setIsStoryOpen(true)}
               className="text-sm text-blue-600 hover:underline flex items-center gap-1"
             >
               See More <span>→</span>
-            </a>
+            </button>
           </div>
 
           {/* Horizontal scrollable container */}
           <div className="flex space-x-6 overflow-x-auto scrollbar-hide py-3">
-            {photoStories.map((story, index) => (
+            {stories.map((story, index) => (
               <div
                 key={index}
                 className="flex-shrink-0 w-72 border-r border-gray-400 pr-4"
               >
                 <img
-                  src={story.image}
+                  src={story.image_url}
                   alt={story.title}
                   className="w-full h-80 object-cover rounded"
                 />
                 <h3 className="mt-3 font-bold text-lg leading-tight hover:text-blue-600 transition">
                   {story.title}
                 </h3>
-                <p className="text-sm text-gray-500 mt-1">{story.time}</p>
+                <p className="text-sm text-gray-500 mt-1">
+                  {formatDate(story.createdAt)}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </div>
       {/* <LatestNewsWidget /> */}
-      {/* <div className="fixed top-0 w-screen h-screen z-1000">
-        <StoryPage />
-      </div> */}
+      {isStoryOpen && (
+        <div className="fixed top-0 w-screen h-screen z-[1000]">
+          <StoryPage stories={stories} />
+        </div>
+      )}
     </>
   );
 }

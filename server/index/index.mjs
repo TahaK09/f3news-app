@@ -6,6 +6,7 @@ import morgan from "morgan";
 import connectDB from "../config/mongodb.mjs";
 import articleRouter from "../routers/articleRouter.mjs";
 import featureRouter from "../routers/fVideoRouter.mjs";
+import storyRouter from "../routers/storyRouter.mjs";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -42,6 +43,7 @@ if (process.env.NODE_ENV === "development") {
 app.get("/", (req, res) => res.send("API WORKING"));
 app.use("/api/articles", articleRouter);
 app.use("/api/featuredvideo", featureRouter);
+app.use("/api/stories", storyRouter);
 
 // DB & Server
 connectDB()
