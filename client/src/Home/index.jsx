@@ -1,12 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import image from "../assets/News-1.webp";
 import SocialWidget from "../components/custom/SocialWidget.jsx";
 import Newsletter from "../components/custom/Newsletter.jsx";
 import CallToAction from "../components/custom/CallToAction.jsx";
 import RecentSocialPosts from "../components/custom/RecentSocialPosts.jsx";
 import { Clock } from "lucide-react";
+import axios from "axios";
 
 function Home() {
+  const API_URL = import.meta.env.VITE_RENDER_SERVER_URL;
+
+  const [indiaNews, setIndiaNews] = useState();
+  //Wrap this all specific news in the context file
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/api/articles/category/india`);
+        if (res.data.success && res.data.articles) {
+          setIndiaNews(res.data.articles || []);
+        }
+      } catch (err) {
+        console.error("Error fetching articles:", err);
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
+  const ReadingTime = (content) => {
+    const averageReadingTime = 200;
+    const words = content?.trim()?.split(/\s+/)?.length || 0;
+    const time = Math.ceil(words / averageReadingTime);
+    return `${time} minutes read`;
+  };
+
   const contents = [
     {
       tag: "Sports",
@@ -67,51 +94,6 @@ function Home() {
       tag: "Deals",
       title:
         "Amazon Haul weekly deals: Save on gardening accessories, travel gear and more",
-    },
-  ];
-
-  const newsItems = [
-    {
-      title:
-        "Jammu & Kashmir SIA arrests key accused in drug syndicate from Punjab",
-      time: "2 hours ago",
-      image:
-        "https://a57.foxnews.com/prod-hp.foxnews.com/images/2025/04/458/258/b3b0618d3541a10eb10e7803c7c34dec.png?tl=1&ve=1",
-    },
-    {
-      title:
-        "Major fire breaks out in central Kolkata hotel, two persons injured",
-      time: "2 hours ago",
-      image:
-        "https://a57.foxnews.com/prod-hp.foxnews.com/images/2025/04/458/258/b3b0618d3541a10eb10e7803c7c34dec.png?tl=1&ve=1",
-    },
-    {
-      title:
-        "Boy injured in 'Pushpa 2' screening stampede shifted to neurorehab centre",
-      time: "2 hours ago",
-      image:
-        "https://a57.foxnews.com/prod-hp.foxnews.com/images/2025/04/458/258/b3b0618d3541a10eb10e7803c7c34dec.png?tl=1&ve=1",
-    },
-    {
-      title:
-        "Pahalgam terror attack: PM Modi meets RSS chief Bhagwat at the former's...",
-      time: "2 hours ago",
-      image:
-        "https://a57.foxnews.com/prod-hp.foxnews.com/images/2025/04/458/258/b3b0618d3541a10eb10e7803c7c34dec.png?tl=1&ve=1",
-    },
-    {
-      title:
-        "IATA flags concerns over Mumbai airport's plan to stop cargo flights, withdraw...",
-      time: "3 hours ago",
-      image:
-        "https://a57.foxnews.com/prod-hp.foxnews.com/images/2025/04/458/258/b3b0618d3541a10eb10e7803c7c34dec.png?tl=1&ve=1",
-    },
-    {
-      title:
-        "Muslims utter 'Allahu Akbar' in most situations: Father of Pahalgam zip line worker",
-      time: "3 hours ago",
-      image:
-        "https://a57.foxnews.com/prod-hp.foxnews.com/images/2025/04/458/258/b3b0618d3541a10eb10e7803c7c34dec.png?tl=1&ve=1",
     },
   ];
 
@@ -353,17 +335,19 @@ function Home() {
 
             {/* Right: Smaller news items */}
             <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {newsItems.map((item, idx) => (
+              {indiaNews.map((news, idx) => (
                 <div
-                  key={idx}
+                  key={news._id}
                   className="flex gap-3 border-b border-gray-300 pb-3"
                 >
                   <div className="flex-1">
-                    <h4 className="text-sm font-medium">{item.title}</h4>
-                    <p className="text-xs text-gray-400 mt-1">{item.time}</p>
+                    <h4 className="text-sm font-medium">{news.title}</h4>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {ReadingTime(news.content)}
+                    </p>
                   </div>
                   <img
-                    src={item.image}
+                    src={news.image}
                     alt="News thumbnail"
                     className="w-[80px] h-[60px] object-cover rounded"
                   />
