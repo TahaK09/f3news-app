@@ -3,10 +3,10 @@ import RecentSocialPosts from "../components/custom/RecentSocialPosts";
 import LatestNewsWidget from "../components/custom/LatestNewsWidget";
 import StoryPage from "../components/custom/StoryPage.jsx";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Entertainment() {
   const [stories, setStories] = useState([]);
-  const [isStoryOpen, setIsStoryOpen] = useState(false);
   const [articles, setArticles] = useState([]);
   const API_URL = import.meta.env.VITE_RENDER_SERVER_URL;
 
@@ -56,7 +56,20 @@ function Entertainment() {
       timeZoneName: "short",
     });
   };
+  const DateFormat = (uploadedAt) => {
+    const now = new Date();
+    const uploadedDate = new Date(uploadedAt);
+    const diff = now - uploadedDate;
 
+    const minsDiff = Math.floor(diff / (1000 * 60));
+    const hoursDiff = Math.floor(diff / (1000 * 60 * 60));
+    const daysDiff = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    if (minsDiff < 1) return "Just now";
+    if (hoursDiff < 1) return `${minsDiff} min ago`;
+    if (daysDiff < 1) return `${hoursDiff} hour${hoursDiff > 1 ? "s" : ""} ago`;
+    return `${daysDiff} day${daysDiff > 1 ? "s" : ""} ago`;
+  };
   const [current, setCurrent] = useState(0);
 
   const next = () => setCurrent((prev) => (prev + 1) % articles.length);
@@ -137,18 +150,19 @@ function Entertainment() {
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold">PHOTOS</h2>
-            <button
-              onClick={() => setIsStoryOpen(true)}
+            <Link
+              to={`story/1`}
               className="text-sm text-blue-600 hover:underline flex items-center gap-1"
             >
               See More <span>→</span>
-            </button>
+            </Link>
           </div>
 
           {/* Horizontal scrollable container */}
           <div className="flex space-x-6 overflow-x-auto scrollbar-hide py-3">
             {stories.map((story, index) => (
-              <div
+              <Link
+                to={`story/${index + 1}`}
                 key={index}
                 className="flex-shrink-0 w-72 border-r border-gray-400 pr-4"
               >
@@ -161,19 +175,13 @@ function Entertainment() {
                   {story.title}
                 </h3>
                 <p className="text-sm text-gray-500 mt-1">
-                  {formatDate(story.createdAt)}
+                  {DateFormat(story.createdAt)}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
       </div>
-      {/* <LatestNewsWidget /> */}
-      {isStoryOpen && (
-        <div className="fixed top-0 w-screen h-screen z-[1000]">
-          <StoryPage stories={stories} />
-        </div>
-      )}
     </>
   );
 }

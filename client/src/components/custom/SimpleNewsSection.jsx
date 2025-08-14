@@ -1,87 +1,54 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const articles = [
-  {
-    title:
-      "Assam panchayat polls: Over 56% voter turnout till 3.30 pm amidst stray incidents of violence",
-    summary:
-      "Voting began at 7.30 am and concluded at 4.30 pm in 14 districts...",
-    image:
-      "https://images.deccanherald.com/deccanherald%2F2025-05-02%2Fxd6vf18u%2Ffile80gnfd7m0ll1fhicch0g.jpg?rect=0%2C0%2C1200%2C675&auto=format%2Ccompress&fmt=webp&fit=max&format=webp&q=70&w=300&dpr=1.1", // Replace with actual image path
-    time: "3 minutes ago",
-  },
-  {
-    title:
-      "'If India attacks Pakistan…': Yunus aide's 'northeast' warning over Pahalgam terror attack",
-    summary: "In a Facebook post on Tuesday, Rahman wrote in Bengali...",
-    image:
-      "https://images.deccanherald.com/deccanherald%2F2025-05-02%2Fik26a6zz%2FBangladesh17461758673681746175878024.jpg?rect=0%2C0%2C549%2C309&auto=format%2Ccompress&fmt=webp&fit=max&format=webp&q=70&w=300&dpr=1.1",
-    time: "4 minutes ago",
-  },
-  {
-    title:
-      "'Oppn stands with Centre but they have no clear strategy': Kharge on Pahalgam",
-    summary:
-      "The Congress president credited former party chief Rahul Gandhi...",
-    image:
-      "https://images.deccanherald.com/deccanherald%2F2025-05-02%2Fxd6vf18u%2Ffile80gnfd7m0ll1fhicch0g.jpg?rect=0%2C0%2C1200%2C675&auto=format%2Ccompress&fmt=webp&fit=max&format=webp&q=70&w=300&dpr=1.1",
-    time: "9 minutes ago",
-  },
-  {
-    title:
-      "Assam panchayat polls: Over 56% voter turnout till 3.30 pm amidst stray incidents of violence",
-    summary:
-      "Voting began at 7.30 am and concluded at 4.30 pm in 14 districts...",
-    image:
-      "https://images.deccanherald.com/deccanherald%2F2025-05-02%2Fxd6vf18u%2Ffile80gnfd7m0ll1fhicch0g.jpg?rect=0%2C0%2C1200%2C675&auto=format%2Ccompress&fmt=webp&fit=max&format=webp&q=70&w=300&dpr=1.1", // Replace with actual image path
-    time: "3 minutes ago",
-  },
-  {
-    title:
-      "'If India attacks Pakistan…': Yunus aide's 'northeast' warning over Pahalgam terror attack",
-    summary: "In a Facebook post on Tuesday, Rahman wrote in Bengali...",
-    image:
-      "https://images.deccanherald.com/deccanherald%2F2025-05-02%2Fik26a6zz%2FBangladesh17461758673681746175878024.jpg?rect=0%2C0%2C549%2C309&auto=format%2Ccompress&fmt=webp&fit=max&format=webp&q=70&w=300&dpr=1.1",
-    time: "4 minutes ago",
-  },
-  {
-    title:
-      "'Oppn stands with Centre but they have no clear strategy': Kharge on Pahalgam",
-    summary:
-      "The Congress president credited former party chief Rahul Gandhi...",
-    image:
-      "https://images.deccanherald.com/deccanherald%2F2025-05-02%2Fxd6vf18u%2Ffile80gnfd7m0ll1fhicch0g.jpg?rect=0%2C0%2C1200%2C675&auto=format%2Ccompress&fmt=webp&fit=max&format=webp&q=70&w=300&dpr=1.1",
-    time: "9 minutes ago",
-  },
-];
+const NewsSection = ({ page, articles }) => {
+  const DateFormat = (uploadedAt) => {
+    const now = new Date();
+    const uploadedDate = new Date(uploadedAt);
+    const diff = now - uploadedDate;
 
-const NewsSection = ({ sectionTitle = "India News" }) => {
+    const minsDiff = Math.floor(diff / (1000 * 60));
+    const hoursDiff = Math.floor(diff / (1000 * 60 * 60));
+    const daysDiff = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    if (minsDiff < 1) return "Just now";
+    if (hoursDiff < 1) return `${minsDiff} min ago`;
+    if (daysDiff < 1) return `${hoursDiff} hour${hoursDiff > 1 ? "s" : ""} ago`;
+    return `${daysDiff} day${daysDiff > 1 ? "s" : ""} ago`;
+  };
+
   return (
     <div className="max-w-full mx-auto px-10 py-4">
-      <h2 className="text-2xl font-bold border-b-2 border-gray-600 pb-7">
-        {sectionTitle}
+      <h2 className="text-2xl font-bold border-b-2 border-gray-600 pb-7 capitalize">
+        {page}
       </h2>
-      <div className="divide-y mt-4">
+      <div className="divide-y divide-gray-200 mt-4">
         {articles.map((item, index) => (
-          <div
+          <Link
+            to={`${page}/article/${item.slug}`}
             key={index}
-            className="flex flex-col md:flex-row py-4 gap-4 border-gray-200"
+            className="flex flex-col md:flex-row md:items-start py-4 gap-4"
           >
-            <div className="flex flex-col gap-2">
+            {/* Text Section */}
+            <div className="flex flex-col gap-2 flex-1">
               <h3 className="text-xl font-semibold leading-snug">
                 {item.title}
               </h3>
               <p className="text-lg text-gray-600 mt-1">{item.summary}</p>
-              <p className="text-sm text-gray-400 mt-1">{item.time}</p>
+              <p className="text-sm text-gray-400 mt-1">
+                {DateFormat(item.createdAt)}
+              </p>
             </div>
-            <div className="w-full md:w-72 h-44 flex-shrink-0">
+
+            {/* Image Section - fixed width on right */}
+            <div className="w-full md:w-72 h-44 flex-shrink-0 md:order-last">
               <img
-                src={item.image}
+                src={item.image_url}
                 alt={item.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-md"
               />
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

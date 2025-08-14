@@ -163,36 +163,6 @@ function Home() {
     });
   };
 
-  const contents = [
-    {
-      tag: "Sports",
-      image:
-        "https://images.unsplash.com/photo-1560264418-c4445382edbc?q=80&w=400",
-      title:
-        "Tren de Aragua’s explosion in US ‘likely’ facilitated by Venezuelan officials, FBI says",
-      href: "https://localhost:3000/international/this-is-sample-link",
-      readTime: "25 mins",
-    },
-    {
-      tag: "Mumbai",
-      image:
-        "https://images.unsplash.com/photo-1560264418-c4445382edbc?q=80&w=400",
-      title:
-        "Tren de Aragua’s explosion in US ‘likely’ facilitated by Venezuelan officials, FBI says",
-      href: "https://localhost:3000/international/this-is-sample-link",
-      readTime: "25 mins",
-    },
-    {
-      tag: "India",
-      image:
-        "https://images.unsplash.com/photo-1560264418-c4445382edbc?q=80&w=400",
-      title:
-        "Tren de Aragua’s explosion in US ‘likely’ facilitated by Venezuelan officials, FBI says",
-      href: "https://localhost:3000/international/this-is-sample-link",
-      readTime: "25 mins",
-    },
-  ];
-
   const cards = [
     {
       image:
@@ -223,42 +193,6 @@ function Home() {
       tag: "Deals",
       title:
         "Amazon Haul weekly deals: Save on gardening accessories, travel gear and more",
-    },
-  ];
-
-  const newsData = [
-    {
-      title: "Bengaluru: Breach exposes 2.9 lakh BWSSB customers' data",
-      description:
-        "The access to these records, including PAN, Aadhaar numbers...",
-      time: "18 hours ago",
-      image:
-        "https://images.deccanherald.com/deccanherald%2F2025-04-29%2Fegap9hnk%2Fdeccanherald2025-03-149prhvs08deccanherald2025-01-227mbe1nofdeccanherald2024-076b5c6e03-217d-4f72-963b-433131eb9970file7un4chx800o170n3g8x9.avif?rect=0%2C0%2C599%2C337&auto=format%2Ccompress&fmt=webp&fit=max&format=webp&q=70&w=376&dpr=1", // Replace with actual image
-    },
-    {
-      title:
-        "Bengaluru: Bike taxi drivers meet transport minister, urge him to...",
-      description:
-        "In a petition addressed to the minister on behalf of one lakh...",
-      time: "19 hours ago",
-      image:
-        "https://images.deccanherald.com/deccanherald%2F2025-04-29%2Fah4ptlou%2Ffile80epitcxeid1h7g0e474.jpeg?rect=0%2C0%2C1280%2C720&auto=format%2Ccompress&fmt=webp&fit=max&format=webp&q=70&w=376&dpr=1",
-    },
-    {
-      title: "White-topping works: Contractors penalised by BBMP",
-      description: "While one company failed to begin work on the stretch...",
-      time: "19 hours ago",
-      image:
-        "https://images.deccanherald.com/deccanherald%2F2025-04-28%2Fbu7ihm03%2Fdeccanherald2025-03-28churmmv4BBMPDH1550863802.avif?rect=0%2C1%2C1000%2C563&auto=format%2Ccompress&fmt=webp&fit=max&format=webp&q=70&w=376&dpr=1",
-    },
-    {
-      title:
-        "Bengaluru: Bike taxi drivers meet transport minister, urge him to...",
-      description:
-        "In a petition addressed to the minister on behalf of one lakh...",
-      time: "19 hours ago",
-      image:
-        "https://images.deccanherald.com/deccanherald%2F2025-04-29%2Fah4ptlou%2Ffile80epitcxeid1h7g0e474.jpeg?rect=0%2C0%2C1280%2C720&auto=format%2Ccompress&fmt=webp&fit=max&format=webp&q=70&w=376&dpr=1",
     },
   ];
 
@@ -472,7 +406,9 @@ function Home() {
                       <h3 className="font-semibold text-md mb-1">
                         {news.title}
                       </h3>
-                      <p className="text-sm text-gray-600">{news.summary}</p>
+                      <p className="text-sm text-gray-600">
+                        {news.summary.slice(0, 100) + `...`}
+                      </p>
                       <p className="text-xs text-gray-400 mt-2">
                         {DateFormat(news.createdAt)}
                       </p>
@@ -481,7 +417,7 @@ function Home() {
                 </a>
 
                 {/* Vertical Divider */}
-                {index !== newsData.length - 1 && (
+                {index !== mumbaiNews.length - 1 && (
                   <div className="w-0.25 h-full bg-gray-300" />
                 )}
               </div>

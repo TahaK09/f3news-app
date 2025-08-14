@@ -20,12 +20,12 @@ const StorySlide = ({ image_url, title, description }) => (
   </div>
 );
 
-const StoryPage = ({ stories }) => {
+const StoryPage = ({ stories, story }) => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const swiperContainerRef = useRef(null);
   const [swiperInstance, setSwiperInstance] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(story);
 
   useEffect(() => {
     if (
@@ -49,7 +49,7 @@ const StoryPage = ({ stories }) => {
     <div className="relative w-screen h-screen flex items-center justify-center">
       {/* Blurred Background */}
       <img
-        src={stories[currentIndex - 1].image_url}
+        src={stories[story].image_url}
         alt="Blurred"
         className="absolute inset-0 w-full h-full object-cover blur-2xl scale-110"
       />

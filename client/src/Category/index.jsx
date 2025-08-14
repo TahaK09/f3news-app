@@ -197,8 +197,7 @@ function Category() {
       <RecentSocialPosts />
 
       <div className="w-full h-0.25 bg-[#d2d2d2] my-5"></div>
-
-      <NewsSection />
+      <NewsSection articles={articles} page={page} />
 
       <div className="w-full h-0.25 bg-[#d2d2d2] my-5"></div>
 

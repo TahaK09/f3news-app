@@ -8,6 +8,7 @@ import Home from "./Home/index.jsx";
 import Category from "./Category/index";
 import F3Plus from "./Plus/index";
 import Entertainment from "./Entertainment/index";
+import Stories from "./Entertainment/stories";
 import Contact from "./Contact/index";
 import Article from "./Article/index";
 import { AppProvider } from "./Context/AppContext";
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/f3-plus", element: <F3Plus /> },
       { path: "/entertainment", element: <Entertainment /> },
+      { path: "/entertainment/story/:story", element: <Stories /> },
       { path: "/contact", element: <Contact /> },
       { path: "/:page/article/:slug", element: <Article /> },
       { path: "/:page", element: <Category /> },
