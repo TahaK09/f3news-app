@@ -98,6 +98,25 @@ export const getArticleByCategory = async (req, res) => {
   }
 };
 
+export const getLatestFeaturedArticle = async (req, res) => {
+  try {
+    const article = await articleModel
+      .findOne({ is_featured: true })
+      .sort({ createdAt: -1 });
+
+    if (!article) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No Featured Article Found!" });
+    }
+
+    res.json({ success: true, article });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Internal server error!" });
+  }
+};
+
 export const getArticleBySlug = async (req, res) => {
   try {
     const { slug } = req.params;

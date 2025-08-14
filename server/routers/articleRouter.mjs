@@ -7,12 +7,16 @@ import {
   deleteArticle,
   getArticleByCategory,
   getArticleByID,
+  getLatestFeaturedArticle,
 } from "../controllers/articleController.mjs";
 
 const articleRouter = express.Router();
 
-// Get all articles with optional pagination/filter
+// Get all articles
 articleRouter.get("/", getAllArticles);
+
+//Get latest featured article
+articleRouter.get("/", getLatestFeaturedArticle);
 
 // Get articles by category
 articleRouter.get("/category/:category", getArticleByCategory);

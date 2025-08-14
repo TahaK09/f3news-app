@@ -6,32 +6,135 @@ import CallToAction from "../components/custom/CallToAction.jsx";
 import RecentSocialPosts from "../components/custom/RecentSocialPosts.jsx";
 import { Clock } from "lucide-react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Home() {
   const API_URL = import.meta.env.VITE_RENDER_SERVER_URL;
 
-  const [indiaNews, setIndiaNews] = useState();
-  //Wrap this all specific news in the context file
+  const [indiaNews, setIndiaNews] = useState([]);
+  const [mumbaiNews, setMumbaiNews] = useState([]);
+  const [opinionNews, setOpinionNews] = useState([]);
+  const [politicsNews, setPoliticsNews] = useState([]);
+  const [indiaFeaturesNews, setIndiaFeaturesNews] = useState();
+  const [opinionFeaturesNews, setOpinionFeaturesNews] = useState();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchArticles = async () => {
       try {
+        setLoading(true);
         const res = await axios.get(`${API_URL}/api/articles/category/india`);
-        if (res.data.success && res.data.articles) {
-          setIndiaNews(res.data.articles || []);
+        if (res.data.success) {
+          setIndiaNews(res.data.articles.reverse());
+          setIndiaFeaturesNews(
+            res.data.articles
+              .filter((article) => article.is_featured)
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0] // only the latest
+          );
         }
       } catch (err) {
-        console.error("Error fetching articles:", err);
+        setError("Failed to fetch India news");
+      } finally {
+        setLoading(false);
       }
     };
-
     fetchArticles();
-  }, []);
+  }, [API_URL]);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`${API_URL}/api/articles/category/mumbai`);
+        if (res.data.success) {
+          setMumbaiNews(res.data.articles.reverse());
+        }
+      } catch (err) {
+        setError("Failed to fetch Mumbai News!");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArticles();
+  }, [API_URL]);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`${API_URL}/api/articles/category/opinion`);
+        if (res.data.success) {
+          setOpinionNews(res.data.articles.reverse());
+          setOpinionFeaturesNews(
+            res.data.articles
+              .filter((article) => article.is_featured)
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0]
+          );
+        }
+      } catch (err) {
+        setError("Failed to fetch Opinion News!");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArticles();
+  }, [API_URL]);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(
+          `${API_URL}/api/articles/category/politics`
+        );
+        if (res.data.success) {
+          setPoliticsNews(res.data.articles);
+        }
+      } catch (err) {
+        setError("Failed to fetch Politics News!");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArticles();
+  }, [API_URL]);
 
   const ReadingTime = (content) => {
     const averageReadingTime = 200;
     const words = content?.trim()?.split(/\s+/)?.length || 0;
     const time = Math.ceil(words / averageReadingTime);
     return `${time} minutes read`;
+  };
+
+  const DateFormat = (uploadedAt) => {
+    const now = new Date();
+    const uploadedDate = new Date(uploadedAt);
+    const diff = now - uploadedDate;
+
+    const minsDiff = Math.floor(diff / (1000 * 60));
+    const hoursDiff = Math.floor(diff / (1000 * 60 * 60));
+    const daysDiff = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    if (minsDiff < 1) return "Just now";
+    if (hoursDiff < 1) return `${minsDiff} min ago`;
+    if (daysDiff < 1) return `${hoursDiff} hour${hoursDiff > 1 ? "s" : ""} ago`;
+    return `${daysDiff} day${daysDiff > 1 ? "s" : ""} ago`;
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    return date.toLocaleString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+      timeZone: "Asia/Kolkata", // Ensures IST
+      timeZoneName: "short",
+    });
   };
 
   const contents = [
@@ -130,34 +233,6 @@ function Home() {
       time: "19 hours ago",
       image:
         "https://images.deccanherald.com/deccanherald%2F2025-04-29%2Fah4ptlou%2Ffile80epitcxeid1h7g0e474.jpeg?rect=0%2C0%2C1280%2C720&auto=format%2Ccompress&fmt=webp&fit=max&format=webp&q=70&w=376&dpr=1",
-    },
-  ];
-
-  const explainers = [
-    {
-      title: "Explained | Canada votes: What’s at stake?",
-      excerpt:
-        "One of the world’s most prosperous nations and America’s closest ally and trading partner...",
-      date: "28 April 2025, 15:29 IST",
-    },
-    {
-      title: "Explained | Will Pope Francis be made a saint?",
-      excerpt:
-        "To date, 80 of the 266 popes to serve over nearly 2,000 years have been canonized...",
-      date: "27 April 2025, 00:21 IST",
-    },
-    {
-      title: "Explained | What’s at stake in the Iran-US nuclear talks",
-      excerpt:
-        "The talks have the potential to reshape regional and global security...",
-      date: "26 April 2025, 16:03 IST",
-    },
-    {
-      title:
-        "Explained | How Pakistan’s decision to close airspace for India affects airlines and fliers",
-      excerpt:
-        "Earlier also, Pakistan had barred Indian airlines from using its airspace...",
-      date: "25 April 2025, 12:38 IST",
     },
   ];
 
@@ -306,53 +381,59 @@ function Home() {
         <div className="w-full mx-auto p-4">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl text-gray-700 font-semibold">INDIA</h2>
-            <a
-              href="#"
+            <Link
+              to={`/india`}
               className="text-sm text-gray-600 hover:underline flex items-center"
             >
               See More
               <span className="ml-1">→</span>
-            </a>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Left: Featured news */}
-            <div className="md:col-span-1">
-              <img
-                src="https://a57.foxnews.com/prod-hp.foxnews.com/images/2025/04/458/258/b3b0618d3541a10eb10e7803c7c34dec.png?tl=1&ve=1"
-                alt="Main"
-                className="w-full rounded"
-              />
-              <h3 className="font-bold text-2xl mt-3">
-                Congress deletes post against Modi on Pahalgam; asks leaders ...
-              </h3>
-              <p className="text-sm/5 text-gray-600 mt-3">
-                Already under fire from the BJP over the remarks by some leaders
-                like Siddaramaiah...
-              </p>
-              <p className="text-xs text-gray-400 mt-2">42 minutes ago</p>
-            </div>
+            {indiaFeaturesNews && (
+              <Link
+                to={`/india/article/${indiaFeaturesNews.slug}`}
+                className="md:col-span-1"
+              >
+                <img
+                  src={indiaFeaturesNews.image_url}
+                  alt={indiaFeaturesNews.summary}
+                  className="w-full rounded"
+                />
+                <h3 className="font-bold text-2xl mt-3">
+                  {indiaFeaturesNews.title}
+                </h3>
+                <p className="text-sm/5 text-gray-600 mt-3">
+                  {indiaFeaturesNews.summary}
+                </p>
+                <p className="text-xs text-gray-400 mt-2">42 minutes ago</p>
+              </Link>
+            )}
 
             {/* Right: Smaller news items */}
             <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {indiaNews.map((news, idx) => (
-                <div
-                  key={news._id}
-                  className="flex gap-3 border-b border-gray-300 pb-3"
-                >
-                  <div className="flex-1">
-                    <h4 className="text-sm font-medium">{news.title}</h4>
-                    <p className="text-xs text-gray-400 mt-1">
-                      {ReadingTime(news.content)}
-                    </p>
-                  </div>
-                  <img
-                    src={news.image}
-                    alt="News thumbnail"
-                    className="w-[80px] h-[60px] object-cover rounded"
-                  />
-                </div>
-              ))}
+              {indiaNews &&
+                indiaNews.map((news, idx) => (
+                  <Link
+                    to={`/india/article/${news.slug}`}
+                    key={news._id}
+                    className="flex gap-3 border-b border-gray-300 pb-3"
+                  >
+                    <div className="flex-1">
+                      <h4 className="text-sm font-medium">{news.title}</h4>
+                      <p className="text-xs text-gray-400 mt-1">
+                        {ReadingTime(news.content)}
+                      </p>
+                    </div>
+                    <img
+                      src={news.image_url}
+                      alt="News thumbnail"
+                      className="w-[80px] h-[60px] object-cover rounded"
+                    />
+                  </Link>
+                ))}
             </div>
           </div>
         </div>
@@ -364,33 +445,33 @@ function Home() {
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl text-gray-700 font-semibold">Mumbai</h2>
 
-            <a
-              href="#"
+            <Link
+              to={`/mumbai`}
               className="text-sm text-gray-600 hover:underline flex items-center"
             >
               See More <span className="ml-1">→</span>
-            </a>
+            </Link>
           </div>
 
           {/* Horizontal Scroll */}
           <div className="flex overflow-x-auto space-x-4 scrollbar-hide snap-x snap-mandatory items-stretch pb-4">
-            {newsData.map((item, index) => (
+            {mumbaiNews.map((news, index) => (
               <div key={index} className="flex gap-4">
                 <a href="#" className="snap-start flex-shrink-0 w-72 bg-white">
                   <div>
                     <img
-                      src={item.image}
+                      src={news.image_url}
                       alt="news"
                       className="w-full h-40 object-cover rounded-t-md"
                     />
                     <div className="p-3">
                       <h3 className="font-semibold text-md mb-1">
-                        {item.title}
+                        {news.title}
                       </h3>
-                      <p className="text-sm text-gray-600">
-                        {item.description}
+                      <p className="text-sm text-gray-600">{news.summary}</p>
+                      <p className="text-xs text-gray-400 mt-2">
+                        {DateFormat(news.createdAt)}
                       </p>
-                      <p className="text-xs text-gray-400 mt-2">{item.time}</p>
                     </div>
                   </div>
                 </a>
@@ -411,64 +492,71 @@ function Home() {
           <div className="md:col-span-2">
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-xl font-semibold">OPINION</h2>
-              <a href="#" className="text-sm font-medium text-blue-600">
+              <Link
+                to={`/opinion`}
+                className="text-sm font-medium text-blue-600"
+              >
                 See More →
-              </a>
+              </Link>
             </div>
-            <img
-              src="https://example.com/arab-india.jpg"
-              alt="Main news"
-              className="w-full h-64 object-cover rounded-md"
-            />
-            <h3 className="mt-4 text-xl font-bold leading-snug">
-              Pahalgam Terror Attack | What does shift in support from Arab
-              nations mean for India, Pakistan
-            </h3>
-            <p className="text-gray-700 mt-2">
-              The firm criticism of the attack and the willingness of the Gulf
-              Cooperation Council countries to publicly stand by India is a
-              triumph of New Delhi’s diplomacy...
-            </p>
-            <p className="text-sm text-gray-400 mt-2">9 hours ago</p>
+            {opinionFeaturesNews && (
+              <div className="flex flex-col gap-2">
+                <img
+                  src={opinionFeaturesNews.image_url}
+                  alt={opinionFeaturesNews.title}
+                  className="w-full h-64 object-cover rounded-md"
+                />
+                <h3 className="text-xl font-bold leading-snug">
+                  {opinionFeaturesNews.title}
+                </h3>
+                <p className="text-gray-700">
+                  {opinionFeaturesNews.summary.slice(0, 100) + `...`}
+                </p>
+                <p className="text-sm text-gray-400">
+                  {DateFormat(opinionFeaturesNews.createdAt)}
+                </p>
+              </div>
+            )}
 
             <div className="mt-4 flex gap-4">
-              <div className="flex-1 border-r pr-4">
-                <p className="font-semibold text-sm">Kerala’s Drug Crisis</p>
-                <p className="text-xs text-gray-500">
-                  A war on users, a win for cartels
-                </p>
-              </div>
-              <div className="flex-1 border-r pr-4">
-                <p className="font-semibold text-sm">
-                  Stop scaring future world leaders
-                </p>
-                <p className="text-xs text-gray-500">Out of US campuses</p>
-              </div>
-              <div className="flex-1">
-                <p className="font-semibold text-sm">Trump returns</p>
-                <p className="text-xs text-gray-500">to campaign spotlight</p>
-              </div>
+              {opinionNews &&
+                opinionNews.map((news, index) => (
+                  <div className="flex-1 border-r pr-4" key={news._id}>
+                    <p className="font-semibold text-sm">{news.title}</p>
+                    <p className="text-xs text-gray-500">
+                      {news.summary.slice(0, 100) + `...`}
+                    </p>
+                  </div>
+                ))}
             </div>
           </div>
 
           {/* Right side */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h2 className="text-xl font-semibold">EXPLAINERS</h2>
-              <a href="#" className="text-sm font-medium text-blue-600">
+              <h2 className="text-xl font-semibold">POLITICS</h2>
+              <Link
+                to={`/politics`}
+                className="text-sm font-medium text-blue-600"
+              >
                 See More →
-              </a>
+              </Link>
             </div>
 
-            {explainers.map((item, index) => (
-              <div key={index} className="mb-4">
-                <h4 className="font-bold text-md">
-                  {index + 1}. {item.title}
-                </h4>
-                <p className="text-sm text-gray-700">{item.excerpt}</p>
-                <p className="text-xs text-gray-400 mt-1">{item.date}</p>
-              </div>
-            ))}
+            {politicsNews &&
+              politicsNews.map((news, index) => (
+                <div key={index} className="mb-4">
+                  <h4 className="font-bold text-md">
+                    {index + 1}. {news.title}
+                  </h4>
+                  <p className="text-sm text-gray-700">
+                    {news.summary.slice(0, 100) + "..."}
+                  </p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {formatDate(news.createdAt)}
+                  </p>
+                </div>
+              ))}
           </div>
         </div>
       </div>
