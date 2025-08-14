@@ -15,10 +15,19 @@ function Home() {
   const [mumbaiNews, setMumbaiNews] = useState([]);
   const [opinionNews, setOpinionNews] = useState([]);
   const [politicsNews, setPoliticsNews] = useState([]);
+  const [featuredNews, setFeaturedNews] = useState({});
   const [indiaFeaturesNews, setIndiaFeaturesNews] = useState();
   const [opinionFeaturesNews, setOpinionFeaturesNews] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const mixedNewsSection = [
+    ...mumbaiNews.slice(0, 2),
+    ...opinionNews.slice(0, 2),
+    ...indiaNews.slice(0, 2),
+  ];
+
+  console.log(mixedNewsSection);
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -89,10 +98,27 @@ function Home() {
           `${API_URL}/api/articles/category/politics`
         );
         if (res.data.success) {
-          setPoliticsNews(res.data.articles);
+          setPoliticsNews(res.data.articles.reverse());
         }
       } catch (err) {
         setError("Failed to fetch Politics News!");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArticles();
+  }, [API_URL]);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`${API_URL}/api/articles/featuredArticle`);
+        if (res.data.success) {
+          setFeaturedNews(res.data.article);
+        }
+      } catch (err) {
+        setError("Failed to fetch Featured News!");
       } finally {
         setLoading(false);
       }
@@ -240,108 +266,86 @@ function Home() {
     <>
       <div className="my-5 mt-44 gap-5 w-[60vw] flex flex-col justify-center items-center mx-auto">
         {/* Trnding/Featured Section */}
-        <div className="h-96 flex flex-row relative bg-gray-100 rounded-lg">
-          {/* Image section with badge overlay */}
-          <div className="w-[50%] h-full relative">
-            {/* Trending badge */}
-            <div className="flex justify-center items-center absolute bottom-4 left-4 bg-[#3270d4bd] py-4 px-10 font-medium rounded-sm h-9 text-amber-50 max-w-52 z-20">
-              TRENDING
+        {featuredNews && (
+          <div className="h-96 flex flex-row relative bg-gray-100 rounded-lg">
+            {/* Image section with badge overlay */}
+            <div className="w-[50%] h-full relative">
+              {/* Trending badge */}
+              <div className="flex justify-center items-center absolute bottom-4 left-4 bg-[#3270d4bd] py-4 px-10 font-medium rounded-sm h-9 text-amber-50 max-w-52 z-20">
+                TRENDING
+              </div>
+              <img
+                className="w-full h-full rounded-l-lg object-cover"
+                src={featuredNews.image_url}
+                alt="News"
+              />
             </div>
-            <img
-              className="w-full h-full rounded-l-lg object-cover"
-              src={image}
-              alt="News"
-            />
-          </div>
 
-          {/* Text section */}
-          <div className="w-[50%] px-10 py-2 flex flex-col gap-1">
-            {/* BreadCrums */}
-            <div className="text-base text-blue-700 font-normal">
-              US Politics
-            </div>
-            <div className="text-3xl font-semibold text-gray-900">
-              Trump admin files charges after FOX News exposes state's plan for
-              illegal who killed American teens
-            </div>
-            <div className="font-normal text-gray-600 mt-5 flex flex-col gap-2">
-              <div className="text-lg/5">
-                Kerr County officials took 90 minutes to send emergency alert:
-                Dispatch audio
+            {/* Text section */}
+            <div className="w-[50%] px-10 py-2 flex flex-col gap-1">
+              {/* BreadCrums */}
+              <div className="text-base text-blue-700 font-normal">
+                {featuredNews.subcategory}
               </div>
-              <div className="text-lg/5">
-                'I think this is it': Dad leaves harrowing voicemails before
-                dying in Texas flood
+              <div className="text-3xl font-semibold text-gray-900">
+                {featuredNews.title}
+              </div>
+              <div className="font-normal text-gray-600 mt-4 flex flex-col gap-2">
+                <div className="text-lg/6">{featuredNews.summary}</div>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="w-full h-0.5 bg-[#d2d2d2]"></div>
 
         <div className="border-b-3 border-[#c1c1c1]"></div>
-        <div className="flex border-b border-gray-300 pb-6">
-          {contents.map((item, index) => (
-            <div key={index} className="flex items-stretch">
-              {/* Card */}
-              <a href={item.href} className="w-80 space-y-2">
-                <div className="relative">
-                  <img
-                    src={item.image}
-                    alt="News"
-                    className="w-full h-48 object-cover rounded-md"
-                  />
-                  <span className="absolute bottom-2 left-2 bg-blue-900 text-white text-xs font-bold px-4 py-1.5 rounded-sm">
-                    {item.tag}
-                  </span>
-                </div>
-                <h2 className="text-md font-bold text-[#003366] leading-snug">
-                  {item.title}
-                </h2>
-                <div className="flex items-center text-sm text-gray-500">
-                  <Clock size={16} className="mr-1" />
-                  {item.readTime}
-                </div>
-              </a>
 
-              {/* Vertical Divider */}
-              {index !== contents.length - 1 && (
-                <div className="border-r mx-4 border-gray-300 h-auto" />
-              )}
-            </div>
-          ))}
-        </div>
-        <div className="flex border-b border-gray-300 pb-6">
-          {contents.map((item, index) => (
-            <div key={index} className="flex items-stretch">
-              {/* Card */}
-              <a href={item.href} className="w-80 space-y-2">
-                <div className="relative">
-                  <img
-                    src={item.image}
-                    alt="News"
-                    className="w-full h-48 object-cover rounded-md"
-                  />
-                  <span className="absolute bottom-2 left-2 bg-blue-900 text-white text-xs font-bold px-2 py-1 rounded-sm">
-                    {item.tag}
-                  </span>
-                </div>
-                <h2 className="text-md font-bold text-[#003366] leading-snug">
-                  {item.title}
-                </h2>
-                <div className="flex items-center text-sm text-gray-500">
-                  <Clock size={16} className="mr-1" />
-                  {item.readTime}
-                </div>
-              </a>
+        {mixedNewsSection && mixedNewsSection.length > 0 && (
+          <>
+            {[0, 3].map((startIndex) => (
+              <div
+                key={startIndex}
+                className="grid grid-cols-3 border-b border-gray-300 pb-6 mb-6"
+              >
+                {mixedNewsSection
+                  .slice(startIndex, startIndex + 3)
+                  .map((news, index) => (
+                    <div key={`${startIndex}-${index}`} className="flex">
+                      <Link
+                        to={`${news.category}/article/${news.slug}`}
+                        className="space-y-2 flex-1"
+                      >
+                        <div className="relative">
+                          <img
+                            src={news.image_url}
+                            alt="News"
+                            className="w-full h-48 object-cover rounded-md"
+                            loading="lazy"
+                          />
+                          <span className="absolute bottom-2 left-2 bg-blue-900 text-white text-xs font-bold px-4 py-1.5 rounded-sm capitalize">
+                            {news.category}
+                          </span>
+                        </div>
+                        <h2 className="text-md font-bold text-[#003366] leading-snug">
+                          {news.title}
+                        </h2>
+                        <div className="flex items-center text-sm text-gray-500">
+                          <Clock size={16} className="mr-1" />
+                          {ReadingTime(news.content)}
+                        </div>
+                      </Link>
 
-              {/* Vertical Divider */}
-              {index !== contents.length - 1 && (
-                <div className="border-r mx-4 border-gray-300 h-auto" />
-              )}
-            </div>
-          ))}
-        </div>
+                      {/* Divider between cards in the same row */}
+                      {index !== 2 && (
+                        <div className="w-0.25 bg-gray-300 mx-6"></div>
+                      )}
+                    </div>
+                  ))}
+              </div>
+            ))}
+          </>
+        )}
 
         <CallToAction />
         <RecentSocialPosts />
