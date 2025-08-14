@@ -45,13 +45,13 @@ function StoryPage({ storyBack, storyForward, stories, story }) {
       )}
 
       {/* Story Content */}
-      <div className="relative z-10 flex flex-col items-center justify-end h-full px-3 sm:px-6 pb-16 sm:pb-20 text-white text-center">
+      <div className="relative z-10 flex flex-col items-center justify-center lg:justify-end h-full px-3 sm:px-6 pb-16 sm:pb-20 text-white text-center">
         <img
           src={currentStory.image_url}
           alt={currentStory.description}
           className="rounded-xl sm:rounded-2xl shadow-lg mb-4 sm:mb-6 max-h-[50vh] sm:max-h-[65vh] w-auto max-w-full object-contain"
         />
-        <div className="flex flex-col gap-2 absolute bottom-20 sm:bottom-28 max-w-[90%] sm:max-w-80 bg-black/40 backdrop-blur-sm p-3 sm:p-4 rounded-lg sm:rounded-xl">
+        <div className="flex flex-col gap-2 absolute bottom-70 lg:bottom-27 sm:bottom-28 max-w-[90%] sm:max-w-80 bg-black/40 backdrop-blur-sm p-3 sm:p-4 rounded-lg sm:rounded-xl">
           <h2 className="text-lg sm:text-xl font-semibold leading-snug">
             {currentStory.title}
           </h2>
