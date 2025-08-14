@@ -16,7 +16,7 @@ const articleRouter = express.Router();
 articleRouter.get("/", getAllArticles);
 
 //Get latest featured article
-articleRouter.get("/", getLatestFeaturedArticle);
+articleRouter.get("/featuredArticle", getLatestFeaturedArticle);
 
 // Get articles by category
 articleRouter.get("/category/:category", getArticleByCategory);
