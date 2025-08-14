@@ -94,31 +94,35 @@ function Category() {
   }
 
   return (
-    <div className="w-[65vw] mx-auto my-40 flex flex-col justify-center items-center gap-5">
+    <div className="w-[90vw] lg:w-[65vw] mx-auto my-28 lg:my-40 flex flex-col justify-center items-center gap-5">
       <h1 className="text-center text-3xl font-semibold border-y py-2 mb-4 w-full capitalize text-gray-800">
         {page} News
       </h1>
 
-      <div className="flex flex-col md:flex-row gap-6 w-full">
+      <div className="flex flex-col lg:flex-row lg:gap-6 gap-10 w-full">
         {/* Left - Featured */}
         <div className="md:w-2/3">
           <Link to={`/${page}/article/${featured.slug}`}>
             <img
               src={featured.image_url}
               alt="featured"
-              className="w-full h-[500px] object-cover rounded"
+              className="w-full lg:h-[500px] object-cover lg:rounded rounded-t-lg"
             />
-            <h2 className="mt-4 text-[26px]/10 font-bold">{featured.title}</h2>
-            <p className="text-gray-600 mt-2">
-              {featured.summary?.slice(0, 90).trim() + "..."}
-            </p>
-            <p className="text-sm text-gray-500 mt-1">
-              {DateFormat(featured.createdAt)}
-            </p>
+            <div className="bg-[#cefbff] lg:bg-transparent pt-3 pb-2 px-2 lg:p-0 rounded-b-md lg:rounded-none">
+              <h2 className="text-xl lg:text-[26px]/10 font-bold">
+                {featured.title}
+              </h2>
+              <p className="text-gray-600 mt-2">
+                {featured.summary?.slice(0, 90).trim() + "..."}
+              </p>
+              <p className="text-sm text-gray-500 mt-1">
+                {DateFormat(featured.createdAt)}
+              </p>
+            </div>
           </Link>
         </div>
 
-        <div className="w-0.25 h-[600px] bg-gray-300"></div>
+        <div className="hidden lg:block w-0.25 h-[600px] bg-gray-300"></div>
 
         {/* Right - Side news */}
         <div className="md:w-1/3 space-y-6">

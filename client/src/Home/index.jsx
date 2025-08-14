@@ -241,12 +241,15 @@ function Home() {
             {[0, 3].map((startIndex) => (
               <div
                 key={startIndex}
-                className="grid grid-cols-3 border-b border-gray-300 pb-6 mb-6"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-b border-gray-300 pb-6 mb-6 gap-6"
               >
                 {mixedNewsSection
                   .slice(startIndex, startIndex + 3)
                   .map((news, index) => (
-                    <div key={`${startIndex}-${index}`} className="flex">
+                    <div
+                      key={`${startIndex}-${index}`}
+                      className="flex flex-col sm:flex-row lg:flex-col"
+                    >
                       <Link
                         to={`${news.category}/article/${news.slug}`}
                         className="space-y-2 flex-1"
@@ -271,9 +274,9 @@ function Home() {
                         </div>
                       </Link>
 
-                      {/* Divider between cards in the same row */}
+                      {/* Divider between cards in same row (only show on large screens) */}
                       {index !== 2 && (
-                        <div className="w-0.25 bg-gray-300 mx-6"></div>
+                        <div className="hidden lg:block w-0.25 bg-gray-300 mx-6"></div>
                       )}
                     </div>
                   ))}
@@ -329,7 +332,7 @@ function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Left: Featured news */}
             {indiaFeaturesNews && (
               <Link

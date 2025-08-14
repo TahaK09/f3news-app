@@ -39,7 +39,7 @@ const ArticleCard = ({ title, source, image }) => (
 const AllCategoryNews = () => {
   return (
     <>
-      <div className="flex flex-col gap-4 w-full px-10">
+      <div className="flex flex-col gap-4 w-full px-5 lg:px-20">
         {articles.map((article, index) => (
           <ArticleCard key={index} {...article} />
         ))}

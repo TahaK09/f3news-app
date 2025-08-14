@@ -26,7 +26,7 @@ function Newsletter() {
 
   return (
     <div
-      className={`fixed right-4 ${top_align} z-50 bg-white rounded-md border border-gray-300 shadow-sm text-black space-y-4 flex flex-col justify-center items-center`}
+      className={`fixed hidden lg:block right-4 ${top_align} z-50 bg-white rounded-md border border-gray-300 shadow-sm text-black space-y-4 flex flex-col justify-center items-center`}
     >
       <iframe
         width="330"

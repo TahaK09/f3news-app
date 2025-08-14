@@ -269,6 +269,7 @@ function Navbar() {
         </nav>
       </div>
       {/* Promotion Tag - Only visible at top */}
+      {/* Make a section like where all, social medias can be featured, right below the navbar in the mobile view */}
     </>
   );
 }
