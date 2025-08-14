@@ -37,42 +37,40 @@ function Footer() {
   ];
 
   return (
-    <>
-      <div className="border-t py-20 bg-[#1c1c1d] border-gray-300 px-6 md:px-16 lg:px-24 xl:px-32">
-        <div className="flex flex-col md:flex-row items-start justify-between gap-10 py-10 border-b border-white text-white">
-          <div>
-            <div className="min-w-3xl flex flex-row gap-5">
-              <img
-                className="w-24 md:w-24 rounded-full"
-                src={Logo}
-                alt="dummyLogoColored"
-              />
-              <div className="flex flex-col gap-4">
-                <div className="text-xl font-medium">F3News</div>
-                <div className="text-base font-light">
-                  FAST | FACTS | FEARLESS
-                </div>
-              </div>
+    <footer className="bg-[#1c1c1d] text-white">
+      <div className="border-t border-gray-300 px-6 md:px-12 lg:px-24 py-10">
+        <div className="flex flex-col md:flex-row justify-between gap-10 border-b border-white pb-10">
+          {/* Logo & Address */}
+          <div className="flex flex-col sm:flex-row gap-5">
+            <img
+              className="w-20 md:w-24 rounded-full"
+              src={Logo}
+              alt="F3News Logo"
+            />
+            <div>
+              <h2 className="text-xl font-semibold">F3News</h2>
+              <p className="text-base font-light">FAST | FACTS | FEARLESS</p>
+              <p className="mt-4 text-sm max-w-[350px] leading-relaxed">
+                Address: F3 News, Tattoo, Office No 1, 1st Floor, 545, Kalbadevi
+                Street, opp. Metro Cinema, near Mao Restaurant, Mumbai,
+                Maharashtra 400002
+              </p>
             </div>
-
-            <p className="max-w-[410px] mt-6">
-              Address: F3 News, Tattoo, Office No 1, 1st Floor, 545, Kalbadevi
-              Street, opp. Metro Cinema, near Mao Resturant, Mumbai, Maharashtra
-              400002
-            </p>
           </div>
-          <div className="flex flex-wrap justify-between w-full md:w-[45%] gap-5">
+
+          {/* Links */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 w-full md:w-[50%]">
             {linkSections.map((section, index) => (
               <div key={index}>
-                <h3 className="font-semibold text-base text-white md:mb-5 mb-2">
+                <h3 className="font-semibold text-base mb-3">
                   {section.title}
                 </h3>
-                <ul className="text-sm space-y-1">
+                <ul className="space-y-1 text-sm">
                   {section.links.map((link, i) => (
                     <li key={i}>
                       <a
                         href={link.link}
-                        className="hover:underline transition"
+                        className="hover:underline hover:text-gray-300 transition-colors duration-200"
                       >
                         {link.name}
                       </a>
@@ -83,11 +81,13 @@ function Footer() {
             ))}
           </div>
         </div>
-        <p className="py-4 text-center text-sm md:text-base text-white/80">
-          Copyright 2025 © F3News Right Reserved.
+
+        {/* Copyright */}
+        <p className="pt-6 text-center text-xs md:text-sm text-white/80">
+          © {new Date().getFullYear()} F3News. All Rights Reserved.
         </p>
       </div>
-    </>
+    </footer>
   );
 }
 

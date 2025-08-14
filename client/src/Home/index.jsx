@@ -198,37 +198,38 @@ function Home() {
 
   return (
     <>
-      <div className="my-5 mt-44 gap-5 w-[60vw] flex flex-col justify-center items-center mx-auto">
+      <div className="my-5 mt-30 lg:mt-44 gap-5 w-[90vw] lg:w-[60vw] flex flex-col justify-center items-center mx-auto">
         {/* Trnding/Featured Section */}
         {featuredNews && (
-          <div className="h-96 flex flex-row relative bg-gray-100 rounded-lg">
-            {/* Image section with badge overlay */}
-            <div className="w-[50%] h-full relative">
-              {/* Trending badge */}
-              <div className="flex justify-center items-center absolute bottom-4 left-4 bg-[#3270d4bd] py-4 px-10 font-medium rounded-sm h-9 text-amber-50 max-w-52 z-20">
+          <Link
+            to={`${featuredNews.category}/article/${featuredNews.slug}`}
+            className="flex flex-col-reverse md:flex-row h-auto md:h-96 bg-gray-100 rounded-lg overflow-hidden"
+          >
+            {/* Image */}
+            <div className="w-full md:w-1/2 relative">
+              <div className="absolute bottom-4 left-4 bg-[#3270d4bd] py-2 px-6 font-medium rounded-sm text-white text-sm">
                 TRENDING
               </div>
               <img
-                className="w-full h-full rounded-l-lg object-cover"
+                className="w-full h-64 md:h-full object-cover"
                 src={featuredNews.image_url}
                 alt="News"
               />
             </div>
 
-            {/* Text section */}
-            <div className="w-[50%] px-10 py-2 flex flex-col gap-1">
-              {/* BreadCrums */}
-              <div className="text-base text-blue-700 font-normal">
+            {/* Text */}
+            <div className="w-full md:w-1/2 px-4 md:px-10 py-4 flex flex-col justify-center gap-2">
+              <div className="text-blue-700 text-sm md:text-base font-normal">
                 {featuredNews.subcategory}
               </div>
-              <div className="text-3xl font-semibold text-gray-900">
+              <h2 className="text-xl md:text-3xl font-semibold text-gray-900">
                 {featuredNews.title}
-              </div>
-              <div className="font-normal text-gray-600 mt-4 flex flex-col gap-2">
-                <div className="text-lg/6">{featuredNews.summary}</div>
-              </div>
+              </h2>
+              <p className="text-gray-600 text-lg mt-2 hidden lg:block">
+                {featuredNews.summary}
+              </p>
             </div>
-          </div>
+          </Link>
         )}
 
         <div className="w-full h-0.5 bg-[#d2d2d2]"></div>

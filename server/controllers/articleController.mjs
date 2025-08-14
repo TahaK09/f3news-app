@@ -98,6 +98,23 @@ export const getArticleByCategory = async (req, res) => {
   }
 };
 
+// Get 10 most viewed articles that and that are not more than 2 months old
+export const getMostViewedArticles = async (req, res) => {
+  try {
+    const { category } = req.params;
+    const articles = await articleModel.find({ category: category });
+    if (!articles.length) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No such category exists!" });
+    }
+
+    res.json({ success: true, articles });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Internal server error!" });
+  }
+};
+
 export const getLatestFeaturedArticle = async (req, res) => {
   try {
     const article = await articleModel
