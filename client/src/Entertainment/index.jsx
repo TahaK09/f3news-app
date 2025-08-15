@@ -95,31 +95,33 @@ function Entertainment() {
 
           {/* Content */}
           {articles.length > 0 && (
-            <Link
-              to={`/entertainment/article/${articles[current].slug}`}
-              className="relative flex flex-col sm:flex-row w-full overflow-hidden gap-4 sm:gap-0"
-            >
-              {/* Image */}
-              <div className="w-full sm:w-2/3">
-                <img
-                  src={articles[current].image_url}
-                  alt={articles[current].title}
-                  className="w-full h-60 sm:h-[450px] object-cover rounded"
-                />
-              </div>
+            <>
+              <Link
+                to={`/entertainment/article/${articles[current].slug}`}
+                className="relative flex flex-col sm:flex-row w-full overflow-hidden gap-4 sm:gap-0"
+              >
+                {/* Image */}
+                <div className="w-full sm:w-2/3">
+                  <img
+                    src={articles[current].image_url}
+                    alt={articles[current].title}
+                    className="w-full h-60 sm:h-[450px] object-cover rounded"
+                  />
+                </div>
 
-              {/* Text */}
-              <div className="w-full sm:w-1/3 sm:pl-6 flex flex-col justify-center mt-4 sm:mt-0">
-                <h3 className="text-lg sm:text-2xl font-bold leading-snug mb-3">
-                  {articles[current].title}
-                </h3>
-                <p className="text-gray-700 mb-2 text-sm sm:text-base">
-                  {articles[current].excerpt}
-                </p>
-                <p className="text-xs sm:text-sm text-gray-400">
-                  {formatDate(articles[current].createdAt)}
-                </p>
-              </div>
+                {/* Text */}
+                <div className="w-full sm:w-1/3 sm:pl-6 flex flex-col justify-center mt-4 sm:mt-0">
+                  <h3 className="text-lg sm:text-2xl font-bold leading-snug mb-3">
+                    {articles[current].title}
+                  </h3>
+                  <p className="text-gray-700 mb-2 text-sm sm:text-base">
+                    {articles[current].excerpt}
+                  </p>
+                  <p className="text-xs sm:text-sm text-gray-400">
+                    {formatDate(articles[current].createdAt)}
+                  </p>
+                </div>
+              </Link>
 
               {/* Arrows */}
               <button
@@ -152,7 +154,7 @@ function Entertainment() {
                   <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
                 </svg>
               </button>
-            </Link>
+            </>
           )}
 
           {/* Dots */}
