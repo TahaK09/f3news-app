@@ -43,7 +43,7 @@ function Footer() {
           {/* Logo & Address */}
           <div className="flex flex-col sm:flex-row gap-5">
             <img
-              className="w-20 md:w-24 rounded-full"
+              className="w-20 md:w-24 h-20 md:h-24 rounded-full"
               src={Logo}
               alt="F3News Logo"
             />
@@ -52,8 +52,8 @@ function Footer() {
               <p className="text-base font-light">FAST | FACTS | FEARLESS</p>
               <p className="mt-4 text-sm max-w-[350px] leading-relaxed">
                 Address: F3 News, Tattoo, Office No 1, 1st Floor, 545, Kalbadevi
-                Street, opp. Metro Cinema, near Mao Restaurant, Mumbai,
-                Maharashtra 400002
+                Street, opp. Metro Cinema, Near Mao Restaurant, Mumbai,
+                Maharashtra, 400002
               </p>
             </div>
           </div>
