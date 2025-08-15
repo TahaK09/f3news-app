@@ -95,7 +95,10 @@ function Entertainment() {
 
           {/* Content */}
           {articles.length > 0 && (
-            <div className="relative flex flex-col sm:flex-row w-full overflow-hidden gap-4 sm:gap-0">
+            <Link
+              to={`entertainment/article/${articles[current].slug}`}
+              className="relative flex flex-col sm:flex-row w-full overflow-hidden gap-4 sm:gap-0"
+            >
               {/* Image */}
               <div className="w-full sm:w-2/3">
                 <img
@@ -149,7 +152,7 @@ function Entertainment() {
                   <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
                 </svg>
               </button>
-            </div>
+            </Link>
           )}
 
           {/* Dots */}

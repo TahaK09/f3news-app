@@ -15,7 +15,7 @@ function Stories() {
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/stories`);
+        const res = await axios.get(`${API_URL}/api/stories`);
         if (res.data.success && res.data.stories) {
           setStories(res.data.stories);
         }

@@ -25,5 +25,5 @@ const newsArticleSchema = new mongoose.Schema(
 
 const articleModel = mongoose.model("Article", newsArticleSchema);
 //It will search for this user model and if that's not available then it will create
-
+//Shall I add Email or No? for fetching?
 export default articleModel;
