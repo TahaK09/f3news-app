@@ -96,7 +96,7 @@ function Entertainment() {
           {/* Content */}
           {articles.length > 0 && (
             <Link
-              to={`entertainment/article/${articles[current].slug}`}
+              to={`/entertainment/article/${articles[current].slug}`}
               className="relative flex flex-col sm:flex-row w-full overflow-hidden gap-4 sm:gap-0"
             >
               {/* Image */}
