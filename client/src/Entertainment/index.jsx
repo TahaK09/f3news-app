@@ -78,11 +78,13 @@ function Entertainment() {
 
   return (
     <>
-      <div className="mt-20 sm:mt-40 mx-auto w-full sm:w-[60vw] px-4">
+      <div className="mt-25 sm:mt-40 mx-auto w-full sm:w-[60vw] px-4">
         <div className="px-4 sm:px-6 py-6 sm:py-10 bg-white">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-            <h2 className="text-lg sm:text-xl font-semibold">MOVIE articles</h2>
+            <h2 className="text-lg sm:text-xl font-semibold">
+              MOVIE Reviews & Articles
+            </h2>
             <a
               href="#"
               className="text-sm text-blue-600 hover:underline flex items-center gap-1 mt-2 sm:mt-0"
@@ -121,13 +123,31 @@ function Entertainment() {
                 onClick={prev}
                 className="absolute left-2 sm:left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-1 sm:p-2 shadow"
               >
-                ◀
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="18px"
+                  viewBox="0 -960 960 960"
+                  width="18px"
+                  className="sm:h-[20px] sm:w-[20px]"
+                  fill="#999999"
+                >
+                  <path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" />
+                </svg>
               </button>
               <button
                 onClick={next}
                 className="absolute right-2 sm:right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-1 sm:p-2 shadow"
               >
-                ▶
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="18px"
+                  viewBox="0 -960 960 960"
+                  width="18px"
+                  className="sm:h-[20px] sm:w-[20px]"
+                  fill="#999999"
+                >
+                  <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
+                </svg>
               </button>
             </div>
           )}

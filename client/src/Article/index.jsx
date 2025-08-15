@@ -68,7 +68,7 @@ function Article() {
 
   return (
     <>
-      <div className="lg:w-[50vw] max-w-full px-5 sm:px-7 mx-auto flex flex-col my-10 sm:my-36 border-r border-gray-200">
+      <div className="lg:w-[50vw] max-w-full px-5 sm:px-7 mx-auto flex flex-col my-20 sm:my-36 border-r border-gray-200">
         {/* Breadcrumbs */}
         <div className="mt-10 flex-row flex gap-2 capitalize justify-start items-center text-[#45b8e4] text-sm sm:text-base">
           <Link to={"/"}>Home</Link>{" "}
