@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Nav from "./components/custom/Nav";
 import Footer from "./components/custom/Footer";
+import { OrbitProgress } from "react-loading-indicators";
 
 import { useUser } from "@clerk/clerk-react";
 
@@ -11,8 +12,14 @@ function App() {
   if (!isLoaded) {
     // Handle loading state
     return (
-      <div className="w-full h-[100vh] flex justify-center items-center">
-        THis is loading
+      <div className="w-screen h-screen flex justify-center items-center">
+        <OrbitProgress
+          variant="track-disc"
+          color="#2db6da"
+          size="small"
+          text=""
+          textColor=""
+        />
       </div>
     );
   }
