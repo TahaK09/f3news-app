@@ -203,7 +203,7 @@ function Home() {
         {featuredNews && (
           <Link
             to={`${featuredNews.category}/article/${featuredNews.slug}`}
-            className="flex flex-col-reverse md:flex-row h-auto md:h-96 bg-gray-100 rounded-lg overflow-hidden"
+            className="capitalize flex flex-col-reverse md:flex-row h-auto md:h-96 bg-gray-100 rounded-lg overflow-hidden"
           >
             {/* Image */}
             <div className="w-full md:w-1/2 relative">
