@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(helmet());
 
 const allowedOrigins = ["https://www.f3news.in", "http://localhost:5173"];
-/*
+
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -32,14 +32,6 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true,
-  })
-);
-*/
-
-app.use(
-  cors({
-    origin: "*",
     credentials: true,
   })
 );
