@@ -350,7 +350,9 @@ function Home() {
                 <p className="text-sm/5 text-gray-600 mt-3">
                   {indiaFeaturesNews.summary}
                 </p>
-                <p className="text-xs text-gray-400 mt-2">42 minutes ago</p>
+                <p className="text-xs text-gray-400 mt-2">
+                  {DateFormat(indiaFeaturesNews.createdAt)}
+                </p>
               </Link>
             )}
 
@@ -399,7 +401,10 @@ function Home() {
           <div className="flex overflow-x-auto space-x-4 scrollbar-hide snap-x snap-mandatory items-stretch pb-4">
             {mumbaiNews.map((news, index) => (
               <div key={index} className="flex gap-4">
-                <a href="#" className="snap-start flex-shrink-0 w-72 bg-white">
+                <a
+                  href={`mumbai/article/${news.slug}`}
+                  className="snap-start flex-shrink-0 w-72 bg-white"
+                >
                   <div>
                     <img
                       src={news.image_url}
@@ -444,22 +449,24 @@ function Home() {
               </Link>
             </div>
             {opinionFeaturesNews && (
-              <div className="flex flex-col gap-2">
-                <img
-                  src={opinionFeaturesNews.image_url}
-                  alt={opinionFeaturesNews.title}
-                  className="w-full h-64 object-cover rounded-md"
-                />
-                <h3 className="text-xl font-bold leading-snug">
-                  {opinionFeaturesNews.title}
-                </h3>
-                <p className="text-gray-700">
-                  {opinionFeaturesNews.summary.slice(0, 100) + `...`}
-                </p>
-                <p className="text-sm text-gray-400">
-                  {DateFormat(opinionFeaturesNews.createdAt)}
-                </p>
-              </div>
+              <Link to={`/opinion/article/${opinionFeaturesNews.slug}`}>
+                <div className="flex flex-col gap-2">
+                  <img
+                    src={opinionFeaturesNews.image_url}
+                    alt={opinionFeaturesNews.title}
+                    className="w-full h-64 object-cover rounded-md"
+                  />
+                  <h3 className="text-xl font-bold leading-snug">
+                    {opinionFeaturesNews.title}
+                  </h3>
+                  <p className="text-gray-700">
+                    {opinionFeaturesNews.summary.slice(0, 100) + `...`}
+                  </p>
+                  <p className="text-sm text-gray-400">
+                    {DateFormat(opinionFeaturesNews.createdAt)}
+                  </p>
+                </div>
+              </Link>
             )}
 
             <div className="mt-4 flex gap-4">
@@ -489,17 +496,19 @@ function Home() {
 
             {politicsNews &&
               politicsNews.map((news, index) => (
-                <div key={index} className="mb-4">
-                  <h4 className="font-bold text-md">
-                    {index + 1}. {news.title}
-                  </h4>
-                  <p className="text-sm text-gray-700">
-                    {news.summary.slice(0, 100) + "..."}
-                  </p>
-                  <p className="text-xs text-gray-400 mt-1">
-                    {formatDate(news.createdAt)}
-                  </p>
-                </div>
+                <Link to={`/politics/article/${news.slug}`}>
+                  <div key={index} className="mb-4">
+                    <h4 className="font-bold text-md">
+                      {index + 1}. {news.title}
+                    </h4>
+                    <p className="text-sm text-gray-700">
+                      {news.summary.slice(0, 100) + "..."}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {formatDate(news.createdAt)}
+                    </p>
+                  </div>
+                </Link>
               ))}
           </div>
         </div>

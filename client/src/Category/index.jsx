@@ -169,7 +169,7 @@ function Category() {
                   index !== section.items.length - 1 ? "border-b" : ""
                 } border-gray-200 pb-4`}
               >
-                <Link to={`/${page}/article/${item.slug}`}>
+                <Link to={`${page}/article/${item.slug}`}>
                   {index === 0 && (
                     <img
                       src={item.image_url}
