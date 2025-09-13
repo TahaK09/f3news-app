@@ -102,7 +102,7 @@ function Category() {
       <div className="flex flex-col lg:flex-row lg:gap-6 gap-10 w-full">
         {/* Left - Featured */}
         <div className="md:w-2/3">
-          <Link to={`${page}/article/${featured.slug}`}>
+          <Link to={`article/${featured.slug}`}>
             <img
               src={featured.image_url}
               alt="featured"
@@ -129,7 +129,7 @@ function Category() {
           {sidenews.map((news, idx) => (
             <div key={idx} className="border-b border-gray-300 pb-4">
               <Link
-                to={`${page}/article/${news.slug}`}
+                to={`article/${news.slug}`}
                 className="flex items-start gap-4"
               >
                 <img
@@ -169,7 +169,7 @@ function Category() {
                   index !== section.items.length - 1 ? "border-b" : ""
                 } border-gray-200 pb-4`}
               >
-                <Link to={`${page}/article/${item.slug}`}>
+                <Link to={`article/${item.slug}`}>
                   {index === 0 && (
                     <img
                       src={item.image_url}
@@ -201,7 +201,7 @@ function Category() {
       <RecentSocialPosts />
 
       <div className="w-full h-0.25 bg-[#d2d2d2] my-5"></div>
-      <NewsSection articles={articles.reverse()} page={page} />
+      <NewsSection articles={articles} page={page} />
 
       <div className="w-full h-0.25 bg-[#d2d2d2] my-5"></div>
 

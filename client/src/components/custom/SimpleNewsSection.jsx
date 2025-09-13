@@ -18,14 +18,14 @@ const NewsSection = ({ page, articles }) => {
   };
 
   return (
-    <div className="max-w-full mx-auto px-10 py-4">
+    <div className="max-w-full mx-auto px-5 lg:px-10 py-4">
       <h2 className="text-2xl font-bold border-b-2 border-gray-600 pb-7 capitalize">
         {page}
       </h2>
       <div className="divide-y divide-gray-200 mt-4">
         {articles.map((item, index) => (
           <Link
-            to={`${page}/article/${item.slug}`}
+            to={`article/${item.slug}`}
             key={index}
             className="flex flex-col md:flex-row md:items-start py-4 gap-4"
           >

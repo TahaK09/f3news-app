@@ -13,6 +13,7 @@ function Home() {
 
   const [indiaNews, setIndiaNews] = useState([]);
   const [mumbaiNews, setMumbaiNews] = useState([]);
+  const [worldNews, setWorldNews] = useState([]);
   const [opinionNews, setOpinionNews] = useState([]);
   const [politicsNews, setPoliticsNews] = useState([]);
   const [featuredNews, setFeaturedNews] = useState({});
@@ -23,7 +24,7 @@ function Home() {
 
   const mixedNewsSection = [
     ...mumbaiNews.slice(0, 2),
-    ...opinionNews.slice(0, 2),
+    ...worldNews.slice(0, 2),
     ...indiaNews.slice(0, 2),
   ];
 
@@ -72,6 +73,22 @@ function Home() {
     const fetchArticles = async () => {
       try {
         setLoading(true);
+        const res = await axios.get(`${API_URL}/api/articles/category/world`);
+        if (res.data.success) {
+          setWorldNews(res.data.articles.reverse());
+        }
+      } catch (err) {
+        setError("Failed to fetch Opinion News!");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArticles();
+  }, [API_URL]);
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        setLoading(true);
         const res = await axios.get(`${API_URL}/api/articles/category/opinion`);
         if (res.data.success) {
           setOpinionNews(res.data.articles.reverse());
@@ -89,7 +106,6 @@ function Home() {
     };
     fetchArticles();
   }, [API_URL]);
-
   useEffect(() => {
     const fetchArticles = async () => {
       try {
