@@ -6,3 +6,12 @@
 body {
   font-family: "TikTok Sans", sans-serif;
 }
+
+.ytp-gradient-top {
+  display: none !important;
+}
+
+.ytp-chrome-top,
+.ytp-show-cards-title {
+  display: none !important;
+}
